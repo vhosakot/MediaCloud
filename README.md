@@ -1,1 +1,1 @@
-#MediaCloud on OpenStack at Cisco Systems
+MediaCloud on OpenStack at Cisco Systems
