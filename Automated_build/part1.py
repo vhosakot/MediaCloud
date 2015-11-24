@@ -112,7 +112,8 @@ for line in out_list:
            re.search(r"rule[ ]*\|[ ]*status[ ]*\|[ ]*error[ ]*\|", line) is not None or\
            re.search(r"ignoring errors", line) is not None or\
            re.search(r"/usr/sbin/semodule:.*failed", line) is not None or\
-           re.search(r"libsemanage.semanage_link_sandbox:.*no such file or directory", line) is not None:
+           re.search(r"libsemanage.semanage_link_sandbox:.*no such file or directory", line) is not None or\
+           re.search(r"http.*metadata file does not match checksum", line) is not None:
              continue
         print "========  ", line
 os.chdir("../..")
