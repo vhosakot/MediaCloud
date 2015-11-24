@@ -67,8 +67,9 @@ if not new_repo:
     for line in out_list:
         line = line.lower()
         if "fail" in line or "err" in line:
-            if "failed to stop docker-cobbler.service: unit docker-cobbler.service not loaded".lower() in line:
-                continue
+            if "failed to stop docker-cobbler.service: unit docker-cobbler.service not loaded".lower() in line or\
+               re.search(r"http.*metadata file does not match checksum", line) is not None:
+                 continue
             print "========  ", line
     print "======== Ran unbootstrap.sh ========\n"
     os.chdir("../../")
