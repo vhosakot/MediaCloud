@@ -45,8 +45,10 @@ if os.path.exists("mercury/bootstrap/installer/openstack/playbooks/openstack-uni
     out_list = out.splitlines() + err.splitlines()
     for line in out_list:
         line = line.lower()
-        if "[os_uninstall | Systemctl daemon-reload to avoid access denied error.]".lower() in line:
-            continue
+        if "[os_uninstall | Systemctl daemon-reload to avoid access denied error.]".lower() in line or\
+           re.search(r"failed:.*docker.*exec.*ovs_vswitch_v1", line) is not None or\
+           re.search(r"error response from daemon.*ovs_vswitch_v1", line) is not None:
+             continue
         if "fail" in line or "err" in line:
             if "failed=0".lower() in line:
                 continue
@@ -93,9 +95,9 @@ print out, err
 print "======== Copied MediaCloud's setup_data.yaml to mercury/bootstrap/openstack-configs/ ========\n"
 
 
-print "======== Running \"./bootstrap.sh -i -t master\" ========\n"
+print "======== Running \"./bootstrap.sh -l -t master\" ========\n"
 os.chdir("mercury/bootstrap")
-proc = Popen(['./bootstrap.sh', '-i', '-t', 'master'],stdout=PIPE, stdin=PIPE, stderr=PIPE,universal_newlines=True)
+proc = Popen(['./bootstrap.sh', '-l', '-t', 'master'],stdout=PIPE, stdin=PIPE, stderr=PIPE,universal_newlines=True)
 out,err = proc.communicate()
 # print out, err
 append_to_logfile(out, "Output of bootstrap.sh")
@@ -119,6 +121,6 @@ for line in out_list:
         print "========  ", line
 os.chdir("../..")
 if not bootstrap_passed:
-    print "======== Ran \"./bootstrap.sh -i -t master\". It failed ========\n"
+    print "======== Ran \"./bootstrap.sh -l -t master\". It failed ========\n"
 else:
-    print "======== Ran \"./bootstrap.sh -i -t master\". It passed! ========\n"
+    print "======== Ran \"./bootstrap.sh -l -t master\". It passed! ========\n"
