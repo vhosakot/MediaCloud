@@ -30,3 +30,7 @@ def run_gerrit_cli(gerrit_cli):
 run_gerrit_cli("ssh -p 29418 vhosakot@cloud-review.cisco.com gerrit query --format=JSON status:new project:mercury/bootstrap")
 run_gerrit_cli("ssh -p 29418 vhosakot@cloud-review.cisco.com gerrit query --format=JSON status:new project:mercury/installer")
 run_gerrit_cli("ssh -p 29418 vhosakot@cloud-review.cisco.com gerrit query --format=JSON status:new project:mercury/kolla")
+
+
+# The following command in a git repo shows all the merges done in the last 24 hours
+# git log --merges --since="yesterday" | grep 'Author\|Merge ' | sed '0~2 a\\'
