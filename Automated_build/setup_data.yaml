@@ -90,7 +90,7 @@ NETWORKING:
     gateway: 10.30.118.193
     #defroute: true
     pool:
-      - 10.30.118.231 to 10.30.118.247
+      - 10.30.118.231 to 10.30.118.240
     segments:
       - management
       - provision
@@ -116,9 +116,10 @@ NETWORKING:
       - 172.16.3.5 to 172.16.3.254
     segments:
       - tenant
-#  -
-#    segments:
-#      - provider
+  -
+    vlan_id: 153
+    segments:
+      - provider
 
 # Redhat Subscription information:
 # rh_username: Redhat subscription username
@@ -247,21 +248,12 @@ SERVERS:
 # SECTION-2 : Openstack Installation Information.
 #####################################################
 
-# Admin Credentials.
-ADMIN_USER: admin
-ADMIN_USER_PASSWORD: media123
-ADMIN_TENANT_NAME: admin
-
 ###############################################
 # HA Proxy
 ################################################
 external_lb_vip_address: 172.29.86.20
-VIRTUAL_ROUTER_ID: 19
-VIP_INTERFACE: a
-
 internal_lb_vip_address: 10.30.118.199
-MGMT_VIRTUAL_ROUTER_ID: 105
-MGMT_VIP_INTERFACE: mx
+VIRTUAL_ROUTER_ID: 20
 
 #################################################
 # Keystone
@@ -269,7 +261,7 @@ MGMT_VIP_INTERFACE: mx
 
 # Keystone Credentials, Tokens.
 ADMIN_USER: admin
-ADMIN_USER_PASSWORD: password
+ADMIN_USER_PASSWORD: media123
 ADMIN_TENANT_NAME: admin
 
 # Keystone Verbosity options:
@@ -288,35 +280,22 @@ USE_STDERR: false
 # output. If ceph install is skipped GLANCE_CLIENT_KEY will get empty string value.
 GLANCE_RBD_POOL: images
 STORE_BACKEND: ceph
-#GLANCE_CLIENT_KEY: AQBATEVVYFUDFRAArbWAL5BN4yTJGdKPVwVs+A==
+# GLANCE_CLIENT_KEY: AQBATEVVYFUDFRAArbWAL5BN4yTJGdKPVwVs+A==
 
 #################################################
 # NEUTRON
 #################################################
 
-## ML2 Conf File
-## TYPE_DRIVERS: flat,vlan
-## TENANT_NETWORK_TYPES: "VXLAN"
-## 153 and 690 are provider network VLANs for MediaCloud
-## NETWORK_VLAN_RANGES: "physnet1:153:153,physnet2"
+# 153 and 690 are provider network VLANs for MediaCloud
 
-## Neutron LinuxBridge Agent
-## BRIDGE_PHYSICAL_INTERFACE: "physnet1:a_b,physnet2:prov_b"
-## VNI_RANGE: "65537:69999"
-
-## L3_PHYSICAL_INTERFACE: "a_b"
-
-MECHANISM_DRIVERS: linuxbridge
-
-L3_PHYSICAL_INTERFACE: "a"
+MECHANISM_DRIVERS: "linuxbridge"
 
 # ML2 Conf File
 TENANT_NETWORK_TYPES: "VXLAN"
-NETWORK_VLAN_RANGES: "physnet1:153:153"
+NETWORK_VLAN_RANGES: "physnet1:1000:1500,physnet2:153:153"
 
 # Neutron LinuxBridge Agent
-BRIDGE_PHYSICAL_INTERFACE: physnet1:a
-ML2_FLAT_NETWORK: physnet1
+BRIDGE_PHYSICAL_INTERFACE: "physnet1:e,physnet2:p"
 
 #################################################
 # CINDER
@@ -346,10 +325,10 @@ CINDER_RBD_POOL: volumes
 # These properties will be used by either glance or cinder playbooks. If ceph is
 # selected as backend store. The decision to select ceph for either glance or cinder
 # can be made independent.
-#CLUSTER_ID: e2a597ff-105d-4266-b322-4887ff19212a
-#MON_HOSTS: 172.29.74.26,172.29.74.27
-#MON_MEMBERS: sj19-lab-ceph01,sj19-lab-ceph02
-#SECRET_UUID: 01caf8ee-21d9-4486-84fd-79b353270b56
+# CLUSTER_ID: e2a597ff-105d-4266-b322-4887ff19212a
+# MON_HOSTS: 172.29.74.26,172.29.74.27
+# MON_MEMBERS: sj19-lab-ceph01,sj19-lab-ceph02
+# SECRET_UUID: 01caf8ee-21d9-4486-84fd-79b353270b56
 
 ##############################################
 # VM Throughput Validation
@@ -357,8 +336,8 @@ CINDER_RBD_POOL: volumes
 VMTP_VALIDATION:
   EXT_NET_NAME: "external_network"
   EXT_NET: 10.30.118.192/26
-  FLOATING_IP_START: 10.30.118.248
-  FLOATING_IP_END: 10.30.118.253
+  FLOATING_IP_START: 10.30.118.241
+  FLOATING_IP_END: 10.30.118.244
   EXT_GATEWAY: 10.30.118.193
   DNS_SERVER: 171.70.168.183
 ...
