@@ -292,7 +292,7 @@ MECHANISM_DRIVERS: "linuxbridge"
 
 # ML2 Conf File
 TENANT_NETWORK_TYPES: "VXLAN"
-NETWORK_VLAN_RANGES: "physnet1:1000:1500,physnet2:153:153"
+NETWORK_VLAN_RANGES: "physnet2:153:153"
 
 # Neutron LinuxBridge Agent
 BRIDGE_PHYSICAL_INTERFACE: "physnet1:e,physnet2:p"
