@@ -1,0 +1,209 @@
+### Heat Template ###
+description: Generated template
+heat_template_version: 2013-05-23
+parameters:
+  server_0_flavor:
+    default: m1.medium
+    description: Flavor to use for server server_0
+    type: string
+  server_0_image:
+    default: cbffe661-4c20-435a-9163-74840dc01d28
+    description: Image to use to boot server server_0
+    type: string
+  server_1_flavor:
+    default: m1.medium
+    description: Flavor to use for server server_1
+    type: string
+  server_1_image:
+    default: cbffe661-4c20-435a-9163-74840dc01d28
+    description: Image to use to boot server server_1
+    type: string
+  server_2_flavor:
+    default: m1.medium
+    description: Flavor to use for server server_2
+    type: string
+  server_2_image:
+    default: cbffe661-4c20-435a-9163-74840dc01d28
+    description: Image to use to boot server server_2
+    type: string
+  server_3_flavor:
+    default: m1.medium
+    description: Flavor to use for server server_3
+    type: string
+  server_3_image:
+    default: cbffe661-4c20-435a-9163-74840dc01d28
+    description: Image to use to boot server server_3
+    type: string
+  server_4_flavor:
+    default: m1.medium
+    description: Flavor to use for server server_4
+    type: string
+  server_4_image:
+    default: cbffe661-4c20-435a-9163-74840dc01d28
+    description: Image to use to boot server server_4
+    type: string
+  server_5_flavor:
+    default: m1.medium
+    description: Flavor to use for server server_5
+    type: string
+  server_5_image:
+    default: cbffe661-4c20-435a-9163-74840dc01d28
+    description: Image to use to boot server server_5
+    type: string
+resources:
+  key_0:
+    properties:
+      name: id_rsa
+      public_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDbeKnjrIuIRpvbL2sR4F9p1anqn7xknZNDmuzHuJDUpOj8r+vV/0RhGX/llicFmMNmm1cF7CFlFMIp/jliErTUcfJF5UJmcyyn1Q5S1YTWYBVJBpzI7ayjXwVVW4EhqJvqatMCzN08lMWY4ZUaRhI5HmeaVpv2s/8To/rGbgK7cpsKaIK/DPsibI0SLlWbc3zSq9XP1eqfylu6CKcoFQDQwF1n9ZfVDqG6/shm5rs/5dV0YlkRcAUK0JP+bc/tlQyEWWDhGnw0Tghmc7jn7qn8nKWhqatv2jKhgu4LS/KiPZjMYNbe6kfF3ZepAdm0gUh460DHUEtV4TV1DEWlUxL1
+        root@mc-installer.ctocllab.cisco.com
+    type: OS::Nova::KeyPair
+  network_0:
+    properties:
+      admin_state_up: true
+      name: Provider_153
+      shared: true
+    type: OS::Neutron::Net
+  security_group_0:
+    properties:
+      description: Default security group
+      name: _default
+      rules:
+      - direction: ingress
+        ethertype: IPv4
+        port_range_max: 22
+        port_range_min: 22
+        protocol: tcp
+        remote_ip_prefix: 0.0.0.0/0
+      - direction: ingress
+        ethertype: IPv4
+        protocol: icmp
+        remote_ip_prefix: 0.0.0.0/0
+      - direction: ingress
+        ethertype: IPv4
+        remote_mode: remote_group_id
+      - direction: egress
+        ethertype: IPv6
+      - direction: ingress
+        ethertype: IPv6
+        remote_mode: remote_group_id
+      - direction: egress
+        ethertype: IPv4
+        port_range_max: 65535
+        port_range_min: 1
+        protocol: tcp
+        remote_ip_prefix: 0.0.0.0/0
+      - direction: egress
+        ethertype: IPv4
+        protocol: icmp
+        remote_ip_prefix: 0.0.0.0/0
+      - direction: egress
+        ethertype: IPv4
+      - direction: ingress
+        ethertype: IPv4
+        port_range_max: 65535
+        port_range_min: 1
+        protocol: tcp
+        remote_ip_prefix: 0.0.0.0/0
+    type: OS::Neutron::SecurityGroup
+  server_0:
+    properties:
+      diskConfig: MANUAL
+      flavor:
+        get_param: server_0_flavor
+      image:
+        get_param: server_0_image
+      key_name:
+        get_resource: key_0
+      name: test-failover
+      networks:
+      - network:
+          get_resource: network_0
+    type: OS::Nova::Server
+  server_1:
+    properties:
+      diskConfig: MANUAL
+      flavor:
+        get_param: server_1_flavor
+      image:
+        get_param: server_1_image
+      key_name:
+        get_resource: key_0
+      name: test-basic
+      networks:
+      - network:
+          get_resource: network_0
+    type: OS::Nova::Server
+  server_2:
+    properties:
+      diskConfig: MANUAL
+      flavor:
+        get_param: server_2_flavor
+      image:
+        get_param: server_2_image
+      key_name:
+        get_resource: key_0
+      name: test3
+      networks:
+      - network:
+          get_resource: network_0
+    type: OS::Nova::Server
+  server_3:
+    properties:
+      diskConfig: MANUAL
+      flavor:
+        get_param: server_3_flavor
+      image:
+        get_param: server_3_image
+      key_name:
+        get_resource: key_0
+      name: test2
+      networks:
+      - network:
+          get_resource: network_0
+    type: OS::Nova::Server
+  server_4:
+    properties:
+      diskConfig: MANUAL
+      flavor:
+        get_param: server_4_flavor
+      image:
+        get_param: server_4_image
+      key_name:
+        get_resource: key_0
+      name: test1
+      networks:
+      - network:
+          get_resource: network_0
+    type: OS::Nova::Server
+  server_5:
+    properties:
+      diskConfig: MANUAL
+      flavor:
+        get_param: server_5_flavor
+      image:
+        get_param: server_5_image
+      key_name:
+        get_resource: key_0
+      name: ipvs-backup
+      networks:
+      - network:
+          get_resource: network_0
+    type: OS::Nova::Server
+  subnet_0:
+    properties:
+      allocation_pools:
+      - end: 10.23.228.126
+        start: 10.23.228.68
+      cidr: 10.23.228.64/26
+      dns_nameservers:
+      - 172.29.74.154
+      enable_dhcp: true
+      host_routes:
+      - destination: 0.0.0.0/0
+        nexthop: 10.23.228.65
+      ip_version: 4
+      name: ProvSubnet_153
+      network_id:
+        get_resource: network_0
+    type: OS::Neutron::Subnet
+

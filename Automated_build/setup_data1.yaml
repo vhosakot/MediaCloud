@@ -1,0 +1,327 @@
+# Configuration File for VM Setup:
+
+#########################################################
+# User Defined Configuration File.
+# Information in this file is specific to the user setup.
+########################################################
+
+# The file has two main sections:
+# Section-1: The first section is the physical setup information.
+#            The section requires information about your servers like
+#            server cimc ip address, Networking info, some cobbler settings, and
+#            identify your server roles.
+# Section-2: This section has openstack installation specific information.
+#            The installer will abstract all but a few key pieces of configuration
+#            that you will need to provide.
+
+
+#######################################################
+# SECTION-1 : Physical Setup Information.
+#######################################################
+
+# Provide the CIMC (Cisco Integrated Management Interface)
+# Username/password. The information is needed for baremetal
+# install.
+UCSM-COMMON:
+  ucsm_username: "admin"
+  ucsm_password: "media123"
+  ucsm_ip: "10.30.118.196"
+  ucsm_resource_prefix: "mc-"
+
+# Cobbler specific information.
+# server:       Cobbler server IP addr.
+# host_profile: Cobbler host profile to use to install.
+# kickstart:    The cobbler kickstart file
+# cobbler_username: username to access cobbler server.
+# cobbler_password: password to access cobbler server. # Optional
+# admin_username:  <TODO:> Not sure what this is.
+# admin_ssh_keys: This is a generated key which will be put on the hosts.
+#                 This is needed for the next install step, using Ansible.
+COBBLER:
+  #For security, we shouldn't have default root password
+  host_profile: RHEL7.2-x86_64
+  cobbler_username: cobbler
+  cobbler_password: cobbler
+  admin_username: root
+  #this should be the output from: openssl passwd -1 <plaintext password>
+  admin_password_hash: raoQ0M3R3IT6Y
+  admin_ssh_keys:
+    - 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCwTZYtrTQ0gLDKplUHx9s3raf4xJrYQY+MY1XY6B1QHSD5GtQx3ezDiDT0zmY3k3O7NwLyqSwatgCM2itsQHOW0owyIghgshGB92avCALku/4dTCQ4Z3j42ESBLj0FGW9edITbl1IXGGL6PoxM1RCeKncfqsGv9z+xjum+5CTqIAxag06ixL43gP7qJ9YB3e2kod6q1ebiTvw13NvU7icYwQFpp3WoB93RVqSQ1U6D1A3kzDiu6HFOSXh3bcORbgeF8bLw4yC7j1YiMUk79uZs7+0L/7+5+tXCXsMYgPbmGIjFvt/b+ybnHprPchsLpLHw0/iD8dZnlRBgx74hnKCb localadmin@dc1-r3-srv-07'
+    - 'ssh-dss AAAAB3NzaC1kc3MAAAGBAP19pMcjXIqiShh/olfshrdxSdFYtRWi+RQRjrYFtrF2/pUSN3Vk/ZkDQIr26vU6fog+FdyhIEsaZKbVAS/XEp28XzEggPVWscpWpbStQuGKIfDFsrycNWxHRQ7b+1zTRmWK5V8mntMJ0mYUCcYhpjwJcaTTi4pjr6CEhlsTj+19gsfU9vFSCwOS/S9UENhXRU2K1DQ2xrTsxPlRqgsbZrEiLkTu612LTA4OgYVHmzZkRuUnStu+ntGiwhlGUM3GfQ2EwOOl0e9py/qWOLkO2uUh4YvXaHHoLBoqBNSSXIO45uTQJ1UYEcuKi5plxoBw8jWEvpC1LyhklPuHHx+luvxBKbIzzrsuQt2oNXliEROj5nBAb2GdwKtXSIQuwliYNBysT9bTziXa2zPy1qPd+99tKm4niFr2I67LzjeKZendZiHD2cH2zehP0EzMC+YbTNNsF/tWXCdvSaXmlupuzzsdPHJ1EaRB2tib58bwtP+UUJVCipobjQcWzCYJ3sUf8QAAABUAibXsSZ0CEZXp5yGEf3TrOpJDAvkAAAGBAIIM6baeRWfAWUP07TgwUgL2Do+zGFXkb4kxvUWlPBI1ke8hMSss60n3lzpqYnUd6HBKeGqgQJZqAUQ/mnF493ssTadWCaIth+cTZjnyP1eZ5mTcq3ZVUyJUePZXDx8vEUFuwZItASvzYDAzLLjtb7mSq34Fpd3m6xbz/naf0x/GQm5ONA6BEarJdMT153CGNRvFB/3yE5UrrloFv08qGDus0hGr91WloHx2YWoWs3T3YhdLBX0S1pYhhBdOLOpqm/YaXW+3I+BtFIj12rPH8UKQMFYx72su5iS3HaO+VGboAKhyKa3UP0h34J+71Hdu8Nn/KKQI/6RqZNuUPjwxhd5WOsO3NAIaH4+hIvEFA0RY6KxJpmi8XB+XkFXu/aEZ0lXulDwtGaKSEz1za49aDHI7g6fYZO7ny7o0G03sMUHtoilVD+Nx6OPidDID996MHJUPqJR231Os6lz1lRgLdmQi/kEsFkeTgzboEexFr2p3qxQJuW+FPLCjj6EzLPqvMwAAAYEA65gGg2TjQBemjzDtLBl9PNAFBsDhtpXR9H070SfaQtIfGAPxyOdCkFKLzVoE31TVRsYjkMoEA8kl0SKPT+yhKKMEuXZx5J/3PlFtis+imXFUeuhthsx+dmHaqOrzwOYhQC3qWCTsd6W6L8r6QDX5MSOu0UCX0gn58qCKh5SidAze+25vbRI5iWQ8BiP0S022NKo6CFZVQx4MSNTYrZ20POdW4g5XaTeBl9crkQE42rxv+yPyxC54X+5CqRLtS1a9RJmLZHAKCzGylKLGXMHdc7jf7FE5qDn8pJoVfkCMty8InhsJGL1s6120hxmHYyQyzyls92gR5lbpSa0uWsCS3C7KRnIwmR6v+rthsqWyNXfYVMgHgHfeaGc+Yo9TTaq6Kyol10qrmIP0Hle4sFouIBqhFXXJMyGZ9LhEQi2+UZngwA/XAPeKLDVeLXgLkRrnl0wdu8GHYTTj5c6v9xBrCYZ9D1bm9IoXmWKDbDAUkSIkHAclr8mW1F5Ksiiu1sbH bhouser@cisco.com'
+  kickstart:
+    control: control-flexflash-b200m3.ks
+    compute: compute-flexflash-b200m3.ks
+    block_storage: storage-flexflash-c240m4.ks
+
+# Define your networking.
+# System level settings:
+#   domain_name:
+#   ntp_servers:
+#   domain_name_servers:
+#   http_proxy/https_proxy:
+#
+NETWORKING:
+  domain_name: ctocllab.cisco.com
+  ntp_servers:
+    - 1.ntp.esl.cisco.com
+    - 2.ntp.esl.cisco.com
+  domain_name_servers:
+    - 172.29.74.154
+    - 172.29.74.155
+  http_proxy_servers:
+    - "proxy-wsa.esl.cisco.com:80"
+    - "proxy.esl.cisco.com:8080"
+  https_proxy_servers:
+    - "proxy-wsa.esl.cisco.com:80"
+    - "proxy.esl.cisco.com:8080"
+
+  networks:
+  -
+    vlan_id: 119
+    subnet: 10.30.118.192/26
+    gateway: 10.30.118.193
+    pool:
+      - 10.30.118.200 to 10.30.118.228
+    segments:
+      - cimc
+  -
+    vlan_id: 132
+    subnet: 10.30.118.192/26
+    gateway: 10.30.118.193
+    #defroute: true
+    pool:
+      - 10.30.118.231 to 10.30.118.240
+    segments:
+      - management
+      - provision
+  -
+    vlan_id: 860
+    subnet: 172.29.86.0/26
+    gateway: 172.29.86.1
+    segments:
+      - api
+  -
+    vlan_id: 2000
+    subnet: 10.7.7.0/24
+    gateway: 10.7.7.1
+    pool:
+      - 10.7.7.7 to 10.7.7.20
+    segments:
+      - storage
+  -
+    vlan_id: 2001
+    subnet: 172.16.3.0/24
+    gateway: 172.16.3.1
+    pool:
+      - 172.16.3.5 to 172.16.3.254
+    segments:
+      - tenant
+  -
+    vlan_id: 153
+    segments:
+      - provider
+
+# Specify your server roles.
+# Eg:
+# ROLES:
+#   control:
+#     - server-1
+#     - server-2
+#     - server-30
+#     - server-31
+#   compute:
+#     - server-2
+#     ..
+ROLES:
+  control:
+    - mc-controller-1
+    - mc-controller-2
+    - mc-controller-3
+  compute:
+    - mc-compute-1
+    - mc-compute-2
+    - mc-compute-3
+  block_storage:
+    - mc-block-1
+    - mc-block-2
+    - mc-block-3
+  object_storage:
+  networker:
+
+
+# Server common
+# Provide the username (default: root)
+SERVER_COMMON:
+  server_username: root
+
+####################################
+# <TODO> Post MVP everything below here
+# should be dynamically determined.
+####################################
+
+# server information:
+# The only two configuration items required are the
+# CIMC IP 'cimc_ip' and the 'rack_id'.
+# The Rack ID is used during service orchestration to
+# place HA services on controllers in different Racks to
+# provide redundancy.
+#
+# (OPTIONAL):
+# The following information is entirely optional, if using the
+# mercury installer with baremetal install. As part of the baremetal install
+# vnics are created and bonds are automatically created and assigned ip addresses
+# from the ip pool specified in NETWORKING section.
+#   bonds:
+#     management:
+#       ipaddress: 172.22.191.206
+#     control_plane:
+#       ipaddress: 192.168.111.90
+# Eg:
+# server-1:
+#   cimc_info: {'cimc_ip': '172.22.10.10'}
+#   rack_info: {'rack_id': 'RackA'}
+#
+
+# Refer https://cisco.jiveon.com/docs/DOC-395164 for more info
+
+SERVERS:
+  mc-controller-1:
+    rack_info: {'rack_id': 'rack2'}
+    ucsm_info: {'server_type': 'blade',
+                'chassis_id': 2,
+                'blade_id' : 1}
+  mc-controller-2:
+    rack_info: {'rack_id': 'rack3'}
+    ucsm_info: {'server_type': 'blade',
+                'chassis_id': 2,
+                'blade_id' : 2}
+  mc-controller-3:
+    rack_info: {'rack_id': 'rack4'}
+    ucsm_info: {'server_type': 'blade',
+                'chassis_id': 2,
+                'blade_id' : 3}
+  mc-compute-1:
+    rack_info: {'rack_id': 'rack2'}
+    ucsm_info: {'server_type': 'blade',
+                'chassis_id': 2,
+                'blade_id' : 5}
+  mc-compute-2:
+    rack_info: {'rack_id': 'rack2'}
+    ucsm_info: {'server_type': 'blade',
+                'chassis_id': 2,
+                'blade_id' : 6}
+  mc-compute-3:
+    rack_info: {'rack_id': 'rack2'}
+    ucsm_info: {'server_type': 'blade',
+                'chassis_id': 1,
+                'blade_id' : 1}
+  mc-block-1:
+    rack_info: {'rack_id': 'rack2'}
+    ucsm_info: {'server_type': 'rack',
+                'rack-unit_id': 1}
+  mc-block-2:
+    rack_info: {'rack_id': 'rack3'}
+    ucsm_info: {'server_type': 'rack',
+                'rack-unit_id': 2}
+  mc-block-3:
+    rack_info: {'rack_id': 'rack4'}
+    ucsm_info: {'server_type': 'rack',
+                'rack-unit_id': 3}
+
+#####################################################
+# SECTION-2 : Openstack Installation Information.
+#####################################################
+
+###############################################
+# HA Proxy
+################################################
+external_lb_vip_address: 172.29.86.20
+internal_lb_vip_address: 10.30.118.199
+VIRTUAL_ROUTER_ID: 20
+
+#################################################
+# Keystone
+#################################################
+
+# Keystone Credentials, Tokens.
+ADMIN_USER: admin
+ADMIN_USER_PASSWORD: media123
+ADMIN_TENANT_NAME: admin
+
+# Keystone Verbosity options:
+VERBOSE_LOGGING: True
+DEBUG_LOGGING: True
+USE_STDERR: false
+
+#################################################
+# Glance
+#################################################
+
+# Glance store Configuration
+# STORE_BACKEND can be set to either ceph or file. If file picked, there is no need
+# to set GLANCE_CLIENT_KEY. If ceph is picked GLANCE_CLIENT_KEY is required. If left
+# out in setup_data.yaml, it will get the default value retreived from ceph install
+# output. If ceph install is skipped GLANCE_CLIENT_KEY will get empty string value.
+GLANCE_RBD_POOL: images
+STORE_BACKEND: ceph
+# GLANCE_CLIENT_KEY: AQBATEVVYFUDFRAArbWAL5BN4yTJGdKPVwVs+A==
+
+#################################################
+# NEUTRON
+#################################################
+
+# 153 and 690 are provider network VLANs for MediaCloud
+
+MECHANISM_DRIVERS: "linuxbridge"
+
+# ML2 Conf File
+TENANT_NETWORK_TYPES: "VXLAN"
+NETWORK_VLAN_RANGES: "physnet2:153:153"
+
+# Neutron LinuxBridge Agent
+BRIDGE_PHYSICAL_INTERFACE: "physnet1:e,physnet2:p"
+
+#################################################
+# CINDER
+#################################################
+
+# Cinder Volume choice
+# VOLUME_DRIVER supports lvm or ceph. If lvm is picked, there is not need to set
+# any of the ceph properties (CINDER_RBD_POOL and CINDER_CLIENT_KEY). On the other
+# hand, if ceph is picked, CINDER_CLIENT_KEY is required. If you leave it out on
+# setup_data.yaml it will be set to the default falue retrieved from ceph install
+# If ceph install is skipped it will be set to empty string.
+VOLUME_DRIVER: ceph # lvm or ceph
+
+#LVM Properties
+# Property not needed if ceph used
+## VOLUME_GROUP: cinder-volumes # cinder-volume needs to be created, check with vgs command
+
+#Ceph Properties
+# These properties are not needed if lvm is used
+CINDER_RBD_POOL: volumes
+# Ceph Cinder Key. This is a sample, provide yours here.
+#CINDER_CLIENT_KEY: AQAoTEVVMAErAxAAwxV7/dJvc+pBQRho7Ui0Bg==
+
+#################################################
+# CEPH
+##################################################
+# These properties will be used by either glance or cinder playbooks. If ceph is
+# selected as backend store. The decision to select ceph for either glance or cinder
+# can be made independent.
+# CLUSTER_ID: e2a597ff-105d-4266-b322-4887ff19212a
+# MON_HOSTS: 172.29.74.26,172.29.74.27
+# MON_MEMBERS: sj19-lab-ceph01,sj19-lab-ceph02
+# SECRET_UUID: 01caf8ee-21d9-4486-84fd-79b353270b56
+
+##############################################
+# VM Throughput Validation
+##############################################
+#VMTP_VALIDATION:
+  #EXT_NET_NAME: "external_network"
+  #EXT_NET: 10.30.118.192/26
+  #FLOATING_IP_START: 10.30.118.241
+  #FLOATING_IP_END: 10.30.118.244
+  #EXT_GATEWAY: 10.30.118.193
+  #DNS_SERVER: 171.70.168.183
+...
