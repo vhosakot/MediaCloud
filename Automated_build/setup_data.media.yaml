@@ -39,7 +39,7 @@ UCSM-COMMON:
 #                 This is needed for the next install step, using Ansible.
 COBBLER:
   #For security, we shouldn't have default root password
-  host_profile: RHEL7.1-x86_64
+  host_profile: RHEL7.2-x86_64
   cobbler_username: cobbler
   cobbler_password: cobbler
   admin_username: root
@@ -120,22 +120,6 @@ NETWORKING:
     vlan_id: 153
     segments:
       - provider
-
-# Redhat Subscription information:
-# rh_username: Redhat subscription username
-# rh_password:
-# proxy_host: <TODO> Can't we use proxy defined above.
-# proxy_port: <TODO> ..
-# Subscription_pool: Provide the pool ID for your specific subscription pool.
-# repos: The list of Repos to attach to. <TODO> This can be system config.
-
-REDHAT_SUBSCRIPTION:
-  rh_username: cvg-mediacloud
-  rh_password: media123
-  proxy_host: "proxy-wsa.esl.cisco.com"
-  proxy_port: "80"
-  subscription_pool: 8a85f9814f5f7088014f66bed49f1167
-  subscription_pool-ceph: 8a85f981506e17b101506f6e986936b0
 
 # Specify your server roles.
 # Eg:
@@ -334,10 +318,16 @@ CINDER_RBD_POOL: volumes
 # VM Throughput Validation
 ##############################################
 VMTP_VALIDATION:
-  EXT_NET_NAME: "external_network"
-  EXT_NET: 10.30.118.192/26
-  FLOATING_IP_START: 10.30.118.241
-  FLOATING_IP_END: 10.30.118.244
-  EXT_GATEWAY: 10.30.118.193
-  DNS_SERVER: 171.70.168.183
+  EXT_NET:
+    NET_NAME: "external_network"
+    NET_SUBNET: 10.30.118.192/26
+    NET_IP_START: 10.30.118.241
+    NET_IP_END: 10.30.118.244
+    NET_GATEWAY: 10.30.118.193
+    DNS_SERVER: 171.70.168.183
+
+# Optional Services:
+OPTIONAL_SERVICE_LIST:
+  - heat
+  - cloudpulse
 ...
